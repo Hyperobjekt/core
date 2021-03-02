@@ -11,3 +11,8 @@ export {
   useFlyToLatLon,
   useFlyToReset,
 } from "./hooks";
+export {
+  getFeatureGeometryType,
+  getViewportForFeature,
+  getViewportForBounds,
+} from "./selectors";
