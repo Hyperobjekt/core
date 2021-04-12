@@ -1,6 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import clsx from "clsx";
+import { withStyles } from "@material-ui/core";
 
 const styles = (theme) => ({
   root: {
@@ -9,7 +9,7 @@ const styles = (theme) => ({
   },
 });
 
-const Footer = ({ classes, className, props }) => {
+const Footer = ({ classes, className, ...props }) => {
   return (
     <footer
       className={clsx("HypFooter-root", classes.root, className)}
@@ -18,8 +18,6 @@ const Footer = ({ classes, className, props }) => {
     />
   );
 };
-
-Footer.propTypes = {};
 
 export { Footer };
 const exportComponent = withStyles(styles, { name: "HypFooter" })(Footer);
