@@ -42,6 +42,7 @@ const Header = ({
   shrink,
   shrinkOffset,
   stickyOffset,
+  ToolbarProps,
   ...props
 }) => {
   // state indicating whether header is condensed
@@ -82,7 +83,11 @@ const Header = ({
         style={{ height: headerHeight }}
         {...props}
       >
-        <Toolbar className={clsx("HypHeader-toolbar", classes.toolbar)}>
+        <Toolbar
+          disableGutters
+          className={clsx("HypHeader-toolbar", classes.toolbar)}
+          {...ToolbarProps}
+        >
           {children}
         </Toolbar>
       </AppBar>
@@ -103,6 +108,7 @@ Header.defaultProps = {
   stickyOffset: false,
   shrinkOffset: 0,
   classes: {},
+  ToolbarProps: {},
 };
 
 Header.propTypes = {
@@ -121,6 +127,8 @@ Header.propTypes = {
   stickyOffset: PropTypes.number,
   /** Scroll offset before making header shrink */
   shrinkOffset: PropTypes.number,
+  /** Props passed to the Material UI Toolbar */
+  ToolbarProps: PropTypes.object,
 };
 
 export { Header };
