@@ -120,6 +120,7 @@ const Navigation = ({
 };
 
 Navigation.defaultProps = {
+  classes: {},
   onSelect: () => {},
   links: [],
 };

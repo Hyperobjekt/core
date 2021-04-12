@@ -19,6 +19,10 @@ const Footer = ({ classes, className, ...props }) => {
   );
 };
 
+Footer.defaultProps = {
+  classes: {},
+};
+
 export { Footer };
 const exportComponent = withStyles(styles, { name: "HypFooter" })(Footer);
 exportComponent.displayName = "Footer";

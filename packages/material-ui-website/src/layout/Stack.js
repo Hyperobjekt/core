@@ -99,6 +99,7 @@ const Stack = ({
 };
 
 Stack.defaultProps = {
+  classes: {},
   direction: "horizontal",
   between: "sm",
   around: "none",

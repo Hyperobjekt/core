@@ -36,6 +36,10 @@ const Page = ({ classes, className, fillViewport, ...props }) => {
   );
 };
 
+Page.defaultProps = {
+  classes: {},
+};
+
 Page.propTypes = {
   /** object containing class names for elements */
   classes: PropTypes.object,

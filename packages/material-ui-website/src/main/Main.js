@@ -20,6 +20,10 @@ const Main = ({ classes, className, ...props }) => {
   );
 };
 
+Main.defaultProps = {
+  classes: {},
+};
+
 Main.propTypes = {
   /** object containing class names for elements */
   classes: PropTypes.object,
