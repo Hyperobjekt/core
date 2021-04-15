@@ -41,19 +41,16 @@ export const styles = (theme) => {
       padding: theme.spacing(1),
       whiteSpace: "nowrap",
     },
-    /** Styles applied to the sub menu root */
-    subMenu: { marginLeft: theme.spacing(2) },
-    /** Styles applied to each sub menu list item */
-    subMenuListItem: { padding: 0 },
-    /** Styles applied to each sub menu link */
-    subMenuLink: {
-      display: "flex",
-      flex: 1,
-      padding: theme.spacing(2),
-    },
   };
 };
 
+/**
+ * Returns true if the provided menu item matches the active param
+ * or the return value of the active function
+ * @param {*} menuItem
+ * @param {string|function} active
+ * @returns {boolean}
+ */
 const isActive = (menuItem, active) => {
   if (typeof active === "string")
     return menuItem.name === active || menuItem.link === active;
@@ -61,17 +58,20 @@ const isActive = (menuItem, active) => {
   return false;
 };
 
+/**
+ * Creates a nested list of links
+ */
 const Navigation = ({
   classes,
   className,
-  component: Component = "nav",
-  depth = 0,
-  maxDepth = 999,
+  component: Component,
+  depth,
+  maxDepth,
   active,
   links,
+  LinkComponent,
   LinkProps,
-  ArrowIcon = DefaultArrowIcon,
-  onSelect,
+  ArrowIcon,
   ...props
 }) => {
   const showSubmenu = depth < maxDepth;
@@ -93,14 +93,14 @@ const Navigation = ({
             })}
             key={"link" + index}
           >
-            <Link
+            <LinkComponent
               className={clsx("HypNavigation-link", classes.link)}
               href={menuItem.link}
               {...LinkProps}
             >
               {menuItem.name}
               {menuItem.subMenu?.length > 0 && showSubmenu && <ArrowIcon />}
-            </Link>
+            </LinkComponent>
             {menuItem.subMenu?.length > 0 && showSubmenu && (
               <Navigation
                 classes={classes}
@@ -109,7 +109,6 @@ const Navigation = ({
                 maxDepth={maxDepth}
                 links={menuItem.subMenu}
                 active={active}
-                onClick={onSelect}
               ></Navigation>
             )}
           </ListItem>
@@ -121,8 +120,12 @@ const Navigation = ({
 
 Navigation.defaultProps = {
   classes: {},
-  onSelect: () => {},
+  LinkComponent: Link,
+  ArrowIcon: DefaultArrowIcon,
   links: [],
+  component: "nav",
+  depth: 0,
+  maxDepth: 999,
 };
 
 Navigation.propTypes = {
@@ -137,6 +140,18 @@ Navigation.propTypes = {
   component: PropTypes.elementType,
   /** Array of link objects ({ name, link, submenu }) */
   links: PropTypes.array,
+  /** Either a string containing the active page, or a function that accepts a menu item and returns a boolean based on if the menu item is active or not */
+  active: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  /** The maximum depth to nest links to */
+  maxDepth: PropTypes.number,
+  /** The current depth of navigation */
+  depth: PropTypes.number,
+  /** Arrow component to indicate there are sublinks */
+  ArrowIcon: PropTypes.any,
+  /** Component to use for links */
+  LinkComponent: PropTypes.any,
+  /** Props object to pass to link component */
+  LinkProps: PropTypes.object,
 };
 
 export { Navigation };
