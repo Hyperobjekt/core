@@ -1,0 +1,19 @@
+{
+  "name": "@hyperobjekt/scales",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "dependencies": {
+    "d3-array": "^2.12.1",
+    "d3-axis": "^2.1.0",
+    "d3-color": "^2.0.0",
+    "d3-interpolate": "^2.0.1",
+    "d3-scale": "^3.3.0",
+    "d3-scale-chromatic": "^2.0.0",
+    "d3-selection": "^2.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1 || ^17.0.0",
+    "react-dom": "^16.13.1 || ^17.0.0"
+  }
+}
