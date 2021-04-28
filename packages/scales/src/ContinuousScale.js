@@ -1,7 +1,8 @@
 import ContinuousColorScale from "./ContinuousColorScale";
 import TickScale from "./TickScale";
-import { getExtent } from "./utils";
+import { getColorScale, getExtent, getPositionScale } from "./utils";
 import PropTypes from "prop-types";
+import BaseScale from "./BaseScale";
 
 /**
  * Scales take some data and render a tick legend alongside a color scale
@@ -10,21 +11,37 @@ const ContinuousScale = ({
   data,
   valueKey = "value",
   colors = "BuGn",
+  points,
+  width,
+  height,
+  nice,
   tickProps = {},
   margin,
   ...props
 }) => {
   const domain = getExtent(data, (d) => d[valueKey]);
+  const positionScale = getPositionScale("linear", domain, [0, 1], {
+    nice,
+  });
+  const colorScale = getColorScale("sequential", domain, colors);
   return (
-    <>
-      <ContinuousColorScale colors={colors} margin={margin} {...props} />
+    <BaseScale
+      data={data}
+      valueKey={valueKey}
+      positionScale={positionScale}
+      colorScale={colorScale}
+      marker={data[0]}
+      width={width}
+      margin={margin}
+      {...props}
+    >
+      <ContinuousColorScale {...{ colors, points, width, height, margin }} />
       <TickScale
-        domain={domain}
         margin={{ ...margin, top: 0 }}
+        {...{ width, height, nice, domain }}
         {...tickProps}
-        {...props}
       />
-    </>
+    </BaseScale>
   );
 };
 

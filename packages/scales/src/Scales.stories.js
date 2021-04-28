@@ -35,8 +35,10 @@ const scaleProps = {
   height,
   margin,
   nice: true,
-  ticks: 5,
-  tickFormat: ".2s",
+  tickProps: {
+    ticks: 5,
+    tickFormat: ".2s",
+  },
 };
 
 export default {
@@ -54,6 +56,7 @@ export default {
 export const Continuous = ({ Scale, ...args }) => {
   const [data, setData] = useState(makeData(Math.random() * 5000 + 10));
   const updateData = () => setData(makeData(Math.random() * 5000 + 10));
+  console.log("data", data);
   return (
     <>
       <button onClick={updateData}>Randomize Data</button>

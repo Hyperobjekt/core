@@ -9,31 +9,34 @@ import {
   scaleQuantile,
   scaleQuantize,
   scaleThreshold,
+  scaleSequential,
 } from "d3-scale";
 
+/**
+ * Returns an array of group values given a selector
+ * @param {Array<object>} data
+ * @param {function} selector
+ * @returns
+ */
 export const getGroups = (data, selector) => {
   return Array.from(group(data, selector).keys());
 };
 
+/**
+ * Alias for d3.extent
+ */
 export const getExtent = extent;
 
-export const getColorSteps = (name, num) => {
-  let interpolate;
-  if (Array.isArray(name))
-    interpolate = piecewise(interpolateRgb.gamma(2.2), name);
-  if (typeof name === "string" && chromatic[`interpolate${name}`])
-    interpolate = chromatic[`interpolate${name}`];
-  if (!interpolate) throw new Error("cannot create colors");
-  const colors = [];
-  for (let i = 0; i < num; ++i) {
-    colors.push(rgb(interpolate(i / (num - 1))).hex());
-  }
-  return colors;
-};
-
-export const getColorScale = (type, domain, colors, options = {}) => {
-  if (!Array.isArray(domain) || !Array.isArray(colors))
-    throw new Error("must provide domain and colors for color scale");
+/**
+ * Creates a scale for mapping a domain to colors
+ * @param {string} type
+ * @param {Array} domain
+ * @param {Array} colors
+ * @returns
+ */
+export const getColorScale = (type, domain, colors) => {
+  if (!Array.isArray(domain))
+    throw new Error("must provide domain for color scale");
   switch (type) {
     case "quantile":
       return scaleQuantile().domain(domain).range(colors);
@@ -45,11 +48,22 @@ export const getColorScale = (type, domain, colors, options = {}) => {
       return scaleOrdinal().domain(domain).range(colors);
     case "linear":
       return scaleLinear().domain(domain).range(colors);
+    case "sequential":
+      const interpolator = getColorInterpolator(colors);
+      return scaleSequential(interpolator).domain(domain);
     default:
       throw new Error("invalid scale type for color scale");
   }
 };
 
+/**
+ * Returns a scale for mapping domain to a position
+ * @param {string} type
+ * @param {Array} domain
+ * @param {Array} range
+ * @param {object} options
+ * @returns
+ */
 export const getPositionScale = (type, domain, range, options = {}) => {
   if (!Array.isArray(domain) || !Array.isArray(range))
     throw new Error("must provide domain and range for position scale");
@@ -69,6 +83,11 @@ export const getPositionScale = (type, domain, range, options = {}) => {
   return options.nice ? scale.nice() : scale;
 };
 
+/**
+ * Takes a position scale and a color scale and creates "chunks"
+ * that correspond to rectangles for creating a category scale
+ * @returns {Array<object>} [{value, x, width, color}]
+ */
 export const getCategoryChunks = ({ positionScale, colorScale }) => {
   return colorScale.domain().map((d) => ({
     value: d,
@@ -78,6 +97,11 @@ export const getCategoryChunks = ({ positionScale, colorScale }) => {
   }));
 };
 
+/**
+ * Takes a position scale and a color scale and creates "chunks"
+ * that correspond to rectangles for creating discrete color scales
+ * @returns {Array<object>} [{value, x, width, color}]
+ */
 export const getChunks = ({ positionScale, colorScale }) => {
   const scaleCuts = colorScale.thresholds
     ? colorScale.thresholds()
@@ -100,19 +124,34 @@ export const getChunks = ({ positionScale, colorScale }) => {
   }));
 };
 
-export const getColors = (name, num) => {
-  if (Array.isArray(name)) return name;
-  if (typeof name === "string") {
-    if (chromatic[`scheme${name}`] && chromatic[`scheme${name}`][num]) {
-      return chromatic[`scheme${name}`][num];
-    } else {
-      const interpolate = chromatic[`interpolate${name}`];
-      const colors = [];
-      for (let i = 0; i < num; ++i) {
-        colors.push(rgb(interpolate(i / (num - 1))).hex());
-      }
-      return colors;
-    }
+/**
+ * Gets a color interpolator based on a d3-scale-chromatic color scale
+ * string or an array of colors
+ * @param {*} value
+ * @returns {function}
+ */
+export const getColorInterpolator = (value) => {
+  let interpolate;
+  if (Array.isArray(value))
+    interpolate = piecewise(interpolateRgb.gamma(2.2), value);
+  if (typeof value === "string" && chromatic[`interpolate${value}`])
+    interpolate = chromatic[`interpolate${value}`];
+  if (!interpolate) throw new Error("cannot create colors");
+  return interpolate;
+};
+
+/**
+ * Takes a d3-scale-chromatic color scale string or an array of colors
+ * and maps it to an array where the length corresponds to `numColors`
+ * @param {string|Array} value
+ * @param {number} numColors
+ * @returns {Array<string>} array containing hex formatted strings
+ */
+export const getColors = (value, numColors) => {
+  let interpolate = getColorInterpolator(value);
+  const colors = [];
+  for (let i = 0; i < numColors; ++i) {
+    colors.push(rgb(interpolate(i / (numColors - 1))).formatHex());
   }
-  throw new Error("cannot create colors");
+  return colors;
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { getColorSteps } from "./utils";
+import { getColors } from "./utils";
 import { styled } from "@material-ui/styles";
 
 const Container = styled("div")({
@@ -17,8 +17,7 @@ const ContinuousColorScale = ({
 }) => {
   const canvasRef = useRef(null);
   const colors = useMemo(() => {
-    console.log("huh", getColorSteps);
-    return getColorSteps(schemaName, points);
+    return getColors(schemaName, points);
   }, [points, schemaName]);
 
   useEffect(() => {
