@@ -89,7 +89,7 @@ const Header = ({
       {stuck && (
         <div
           className={clsx("HypHeader-offset", classes.offset)}
-          style={{ height: height }}
+          style={{ minHeight: height }}
         />
       )}
     </React.Fragment>
