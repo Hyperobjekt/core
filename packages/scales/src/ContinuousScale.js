@@ -17,6 +17,7 @@ const ContinuousScale = ({
   nice,
   tickProps = {},
   margin,
+  marker,
   ...props
 }) => {
   const domain = getExtent(data, (d) => d[valueKey]);
@@ -30,7 +31,7 @@ const ContinuousScale = ({
       valueKey={valueKey}
       positionScale={positionScale}
       colorScale={colorScale}
-      marker={data[0]}
+      marker={marker}
       width={width}
       margin={margin}
       {...props}

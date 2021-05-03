@@ -56,11 +56,14 @@ export default {
 export const Continuous = ({ Scale, ...args }) => {
   const [data, setData] = useState(makeData(Math.random() * 5000 + 10));
   const updateData = () => setData(makeData(Math.random() * 5000 + 10));
-  console.log("data", data);
+  const marker = {
+    ...data[0],
+    value: Math.round(data[0].value),
+  };
   return (
     <>
       <button onClick={updateData}>Randomize Data</button>
-      <Scale data={data} {...args} />
+      <Scale marker={marker} data={data} {...args} />
     </>
   );
 };

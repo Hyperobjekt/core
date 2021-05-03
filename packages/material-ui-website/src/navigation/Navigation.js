@@ -41,6 +41,9 @@ export const styles = (theme) => {
       padding: theme.spacing(1),
       whiteSpace: "nowrap",
     },
+    linkActive: {
+      fontWeight: "bold",
+    },
   };
 };
 
@@ -71,6 +74,7 @@ const Navigation = ({
   links,
   LinkComponent,
   LinkProps,
+  isGatsbyLink,
   ArrowIcon,
   ...props
 }) => {
@@ -95,7 +99,9 @@ const Navigation = ({
           >
             <LinkComponent
               className={clsx("HypNavigation-link", classes.link)}
-              href={menuItem.link}
+              href={isGatsbyLink ? undefined : menuItem.link}
+              to={isGatsbyLink ? menuItem.link : undefined}
+              activeClassName={isGatsbyLink ? classes.linkActive : undefined}
               {...LinkProps}
             >
               {menuItem.name}
@@ -152,6 +158,8 @@ Navigation.propTypes = {
   LinkComponent: PropTypes.any,
   /** Props object to pass to link component */
   LinkProps: PropTypes.object,
+  /** boolean that determines if the [Gatsby Link API](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-link/) should be used instead of standard `<a>` tag props  */
+  isGatsbyLink: PropTypes.bool,
 };
 
 export { Navigation };
