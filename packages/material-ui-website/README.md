@@ -1,19 +1,5 @@
 # Hyperobjekt Material UI Websites
 
-## Components
+This package contains base components for building websites using themeing and core components from [material-ui](https://material-ui.com/).
 
-### Page
-
-### Header
-
-### Branding
-
-### Navigation
-
-### Main
-
-### Stack
-
-### Footer
-
-### Social Link
+> Note: documentation is in progress. Please check out the [storybook](https://hyperobjekt.github.io/core) for guidance on usage.

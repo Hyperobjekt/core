@@ -5,3 +5,7 @@ export { Navigation } from "./navigation";
 export { Main } from "./main";
 export { Footer } from "./footer";
 export { Page } from "./page";
+export { Hero } from "./hero";
+export { Container } from "./container";
+export { Block } from "./block";
+export { Stack } from "./layout";

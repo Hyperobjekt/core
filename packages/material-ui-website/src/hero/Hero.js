@@ -111,7 +111,7 @@ const Hero = ({
 
 Hero.propTypes = {
   /**
-   * Classname overrides (valid )
+   * Classname overrides (valid keys: `root`, `container`, `imageWrapper`, `image`, `content`, `gradient`, `overlay` )
    */
   classes: PropTypes.object,
   /**
@@ -123,13 +123,21 @@ Hero.propTypes = {
    */
   alt: PropTypes.string,
   /**
-   * Determines the layout for the hero, variants include `default` and `overlay`
+   * Determines the layout for the hero.  Currently `overlay` is the only available variant.
    */
   variant: PropTypes.string,
   /**
    * A CSS gradient string, or alternatively an array of linear-gradient properties.  Use a gradient creator to make things easier: ([components.ai](https://components.ai/gradient/), [cssgradient.io](https://cssgradient.io/))
    */
   gradient: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  /**
+   * Props passed to the Container component
+   */
+  ContainerProps: PropTypes.object,
+  /**
+   * Optional alignment for the content (e.g. "center")
+   */
+  align: PropTypes.string,
 };
 
 export { Hero };
