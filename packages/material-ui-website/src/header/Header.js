@@ -7,22 +7,10 @@ import clsx from "clsx";
 export const styles = (theme) => ({
   /* Styles applied to the root element. */
   root: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "stretch",
-    background: theme.palette.primary.main,
     transition: theme.transitions.create(["height"]),
-    padding: theme.spacing(0, 2),
-    flex: 0,
-    [theme.breakpoints.up("sm")]: {
-      padding: theme.spacing(0, 3),
-    },
   },
   /* Styles applied to the toolbar component. */
   toolbar: {
-    alignItems: "stretch",
-    justifyContent: "space-between",
     flex: 1,
     padding: 0,
   },
@@ -30,7 +18,7 @@ export const styles = (theme) => ({
   stuck: {},
   /* Styles applied when the header is shrunk */
   shrunk: {},
-  /** Styles for fixed header offset */
+  /* Styles for fixed header offset */
   offset: {},
 });
 
