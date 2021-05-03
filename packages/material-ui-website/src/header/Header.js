@@ -34,6 +34,13 @@ export const styles = (theme) => ({
   offset: {},
 });
 
+/**
+ * The Header component is used or adding a header to a page.  Typically it has Branding and Navigation components added to it.  This component provides functionality for:
+ *
+ * - making the header sticky, either always or after scrolling a certain amount
+ * - shrinking the header on scroll
+ * - applying different styles to the header once it is "stuck" or "shrunk"
+ */
 const Header = ({
   classes,
   children,
@@ -113,8 +120,7 @@ Header.defaultProps = {
 
 Header.propTypes = {
   /**
-   * Override or extend the styles applied to the component.
-   * See [CSS API](#css) below for more details.
+   * Override classNames used within the component (valid keys: `root`, `toolbar`, `stuck`, `shrunk`, `offset`)
    */
   classes: PropTypes.object.isRequired,
   /** Height for the header (in px) */
@@ -133,5 +139,12 @@ Header.propTypes = {
 
 export { Header };
 const exportComponent = withStyles(styles, { name: "HypHeader" })(Header);
-exportComponent.displayName = "Header";
+
+// copy static props for storybook
+if (process.env.NODE_ENV !== "production") {
+  exportComponent.displayName = Header.displayName;
+  exportComponent.propTypes = Header.propTypes;
+  exportComponent.defaultProps = Header.defaultProps;
+}
+
 export default exportComponent;

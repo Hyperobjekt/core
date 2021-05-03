@@ -33,5 +33,12 @@ Main.propTypes = {
 
 export { Main };
 const exportComponent = withStyles(styles, { name: "HypMain" })(Main);
-exportComponent.displayName = "Main";
+
+// copy static props for storybook
+if (process.env.NODE_ENV !== "production") {
+  exportComponent.displayName = Main.displayName;
+  exportComponent.propTypes = Main.propTypes;
+  exportComponent.defaultProps = Main.defaultProps;
+}
+
 export default exportComponent;

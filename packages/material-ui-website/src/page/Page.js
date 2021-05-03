@@ -38,6 +38,7 @@ const Page = ({ classes, className, fillViewport, ...props }) => {
 
 Page.defaultProps = {
   classes: {},
+  fillViewport: true,
 };
 
 Page.propTypes = {
@@ -45,11 +46,16 @@ Page.propTypes = {
   classes: PropTypes.object,
   /** class name for root element */
   className: PropTypes.string,
-  /** True if the page should be restricted to the viewport size (no scrolling) */
+  /** True if the page should fill the viewport */
   fillViewport: PropTypes.bool,
 };
 
 export { Page };
 const exportComponent = withStyles(styles, { name: "HypPage" })(Page);
-exportComponent.displayName = "Page";
+// copy static props for storybook
+if (process.env.NODE_ENV !== "production") {
+  exportComponent.displayName = Page.displayName;
+  exportComponent.propTypes = Page.propTypes;
+  exportComponent.defaultProps = Page.defaultProps;
+}
 export default exportComponent;

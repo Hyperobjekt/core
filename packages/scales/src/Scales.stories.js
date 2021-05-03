@@ -62,7 +62,9 @@ export const Continuous = ({ Scale, ...args }) => {
   };
   return (
     <>
-      <button onClick={updateData}>Randomize Data</button>
+      <button style={{ marginBottom: 24 }} onClick={updateData}>
+        Randomize Data
+      </button>
       <Scale marker={marker} data={data} {...args} />
     </>
   );

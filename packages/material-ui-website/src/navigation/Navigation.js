@@ -62,7 +62,7 @@ const isActive = (menuItem, active) => {
 };
 
 /**
- * Creates a nested list of links
+ * The navigation component is used to create a nested list of links, most often used for site navigation.
  */
 const Navigation = ({
   classes,
@@ -166,5 +166,10 @@ export { Navigation };
 const exportComponent = withStyles(styles, { name: "HypNavigation" })(
   Navigation
 );
-exportComponent.displayName = "Navigation";
+// copy static props for storybook
+if (process.env.NODE_ENV !== "production") {
+  exportComponent.displayName = Navigation.displayName;
+  exportComponent.propTypes = Navigation.propTypes;
+  exportComponent.defaultProps = Navigation.defaultProps;
+}
 export default exportComponent;

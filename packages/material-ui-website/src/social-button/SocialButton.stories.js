@@ -1,10 +1,10 @@
 import React from "react";
 
-import SocialLink from "./SocialLink";
+import SocialButton from "./SocialButton";
 
 export default {
-  component: SocialLink,
-  title: "website/SocialLink",
+  component: SocialButton,
+  title: "website/SocialButton",
   argTypes: {
     icon: {
       control: {
@@ -31,4 +31,4 @@ export default {
 /**
  * Basic social button
  */
-export const Base = (args) => <SocialLink {...args} />;
+export const Base = (args) => <SocialButton {...args} />;

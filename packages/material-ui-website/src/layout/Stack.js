@@ -123,5 +123,12 @@ Stack.propTypes = {
 
 export { Stack };
 const exportComponent = withStyles(styles, { name: "HypStack" })(Stack);
-exportComponent.displayName = "Stack";
+
+// copy static props for storybook
+if (process.env.NODE_ENV !== "production") {
+  exportComponent.displayName = Stack.displayName;
+  exportComponent.propTypes = Stack.propTypes;
+  exportComponent.defaultProps = Stack.defaultProps;
+}
+
 export default exportComponent;

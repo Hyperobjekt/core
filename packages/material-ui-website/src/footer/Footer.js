@@ -25,5 +25,12 @@ Footer.defaultProps = {
 
 export { Footer };
 const exportComponent = withStyles(styles, { name: "HypFooter" })(Footer);
-exportComponent.displayName = "Footer";
+
+// copy static props for storybook
+if (process.env.NODE_ENV !== "production") {
+  exportComponent.displayName = Footer.displayName;
+  exportComponent.propTypes = Footer.propTypes;
+  exportComponent.defaultProps = Footer.defaultProps;
+}
+
 export default exportComponent;

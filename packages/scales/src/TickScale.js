@@ -39,10 +39,7 @@ export const TickScale = ({
 
   return (
     <svg width={width} viewBox={[0, 0, width, height]} {...props}>
-      <g
-        transform={`translate(${margin.left} ${margin.top})`}
-        ref={axisRef}
-      ></g>
+      <g transform={`translate(${margin.left} 0.5)`} ref={axisRef}></g>
     </svg>
   );
 };

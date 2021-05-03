@@ -62,5 +62,12 @@ Branding.propTypes = {
 
 export { Branding };
 const exportComponent = withStyles(styles, { name: "HypBranding" })(Branding);
-exportComponent.displayName = "Branding";
+
+// copy static props for storybook
+if (process.env.NODE_ENV !== "production") {
+  exportComponent.displayName = Branding.displayName;
+  exportComponent.propTypes = Branding.propTypes;
+  exportComponent.defaultProps = Branding.defaultProps;
+}
+
 export default exportComponent;

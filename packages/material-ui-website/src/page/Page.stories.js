@@ -8,6 +8,6 @@ export default {
 };
 
 /**
- * Basic Navigation
+ * Basic Page
  */
-export const Base = (args) => <Page {...args} />;
+export const Base = (args) => <Page {...args}>Page</Page>;

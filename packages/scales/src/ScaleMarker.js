@@ -15,8 +15,8 @@ const styles = (theme) => ({
   },
   marker: {
     position: "absolute",
-    background: "#f00",
-    width: 2,
+    background: "#000",
+    width: 1,
     height: 24,
     marginLeft: -1,
   },
