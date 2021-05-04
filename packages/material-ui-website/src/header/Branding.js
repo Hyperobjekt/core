@@ -52,7 +52,7 @@ Branding.propTypes = {
   /** class name for root element */
   className: PropTypes.string,
   /** root component to use for this component */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  component: PropTypes.any,
   /** URL to link the site branding to */
   link: PropTypes.string,
   /** Logo image or component */

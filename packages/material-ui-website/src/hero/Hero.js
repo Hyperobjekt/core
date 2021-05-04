@@ -81,7 +81,6 @@ const Hero = ({
     justifyContent: "space-around",
     ...ContainerProps,
   };
-  console.log("cp", ContainerProps, containerProps);
   return (
     <Block
       classes={{
