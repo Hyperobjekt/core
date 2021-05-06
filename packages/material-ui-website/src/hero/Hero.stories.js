@@ -48,7 +48,9 @@ export const ImageHero = (args) => (
   </Hero>
 );
 ImageHero.args = {
-  image: "https://via.placeholder.com/300x300",
+  image: (
+    <img src="https://via.placeholder.com/300x300" alt="alt placeholder" />
+  ),
   bgcolor: "grey.700",
   ContainerProps: {
     flexDirection: "row-reverse",

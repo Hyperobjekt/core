@@ -95,7 +95,10 @@ const Hero = ({
       <div className={classes.content}>{children}</div>
       {image && (
         <div className={classes.imageWrapper}>
-          <img className={classes.image} src={image} alt={alt} />
+          {typeof image === "string" && (
+            <img className={classes.image} src={image} alt={alt} />
+          )}
+          {typeof image !== "string" && image}
         </div>
       )}
       {gradientString && (
