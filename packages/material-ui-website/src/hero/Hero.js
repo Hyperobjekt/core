@@ -51,6 +51,14 @@ const styles = (theme) => ({
       width: "100%",
       height: "100%",
     },
+    "& $imageWrapper .gatsby-image-wrapper": {
+      objectFit: "cover",
+      margin: "auto",
+      display: "block",
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+    },
   },
 });
 
