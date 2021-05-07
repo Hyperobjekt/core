@@ -9,7 +9,8 @@ export { default as TickScale } from "./TickScale";
 export {
   getGroups,
   getExtent,
-  getColorSteps,
+  getColors,
+  getColorInterpolator,
   getColorScale,
   getPositionScale,
   getCategoryChunks,
