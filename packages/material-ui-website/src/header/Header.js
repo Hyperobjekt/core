@@ -31,6 +31,7 @@ export const styles = (theme) => ({
  */
 const Header = ({
   classes,
+  className,
   children,
   height,
   sticky,
@@ -68,12 +69,17 @@ const Header = ({
   return (
     <React.Fragment>
       <AppBar
-        className={clsx("HypHeader-root", classes.root, {
-          "HypHeader-shrunk": shrunk,
-          [classes.shrunk]: shrunk,
-          "HypHeader-stuck": stuck,
-          [classes.stuck]: stuck,
-        })}
+        className={clsx(
+          "HypHeader-root",
+          classes.root,
+          {
+            "HypHeader-shrunk": shrunk,
+            [classes.shrunk]: shrunk,
+            "HypHeader-stuck": stuck,
+            [classes.stuck]: stuck,
+          },
+          className
+        )}
         position={stuck ? "fixed" : "static"}
         style={{ height: headerHeight }}
         {...props}
