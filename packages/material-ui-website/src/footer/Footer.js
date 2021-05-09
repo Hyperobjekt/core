@@ -9,6 +9,9 @@ const styles = (theme) => ({
   },
 });
 
+/**
+ * Simple footer wrapper
+ */
 const Footer = ({ classes, className, ...props }) => {
   return (
     <footer

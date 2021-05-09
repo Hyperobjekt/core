@@ -22,6 +22,14 @@ const styles = (theme) => ({
   },
 });
 
+/**
+ * Simple page wrapper that fills available space
+ *
+ * ## Classes
+ *
+ * - root: applies to the root element
+ * - fillViewport: applies when the `fillViewport` prop is set
+ */
 const Page = ({ classes, className, fillViewport, ...props }) => {
   return (
     <div

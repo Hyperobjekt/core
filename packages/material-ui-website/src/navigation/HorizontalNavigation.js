@@ -1,7 +1,7 @@
 import { withStyles } from "@material-ui/core";
 import { Navigation } from "./Navigation";
 
-export default withStyles((theme) => ({
+const exportComponent = withStyles((theme) => ({
   root: {},
   list: {
     display: "flex",
@@ -59,3 +59,11 @@ export default withStyles((theme) => ({
     marginRight: theme.spacing(-1),
   },
 }))(Navigation);
+
+// copy static props for storybook
+if (process.env.NODE_ENV !== "production") {
+  exportComponent.displayName = "HorizontalNavigation";
+  exportComponent.propTypes = Navigation.propTypes;
+  exportComponent.defaultProps = Navigation.defaultProps;
+}
+export default exportComponent;

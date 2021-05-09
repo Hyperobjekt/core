@@ -25,6 +25,20 @@ Base.args = {
   },
 };
 
+const PrintJson = ({ data }) => {
+  return (
+    <pre
+      style={{
+        background: "#000",
+        color: "#fff",
+        padding: 16,
+      }}
+    >
+      {JSON.stringify(data, null, 2)}
+    </pre>
+  );
+};
+
 export const BlockVisibility = (args) => {
   const [visibleBlocks, setVisibleBlocks] = useState({});
 
@@ -39,38 +53,31 @@ export const BlockVisibility = (args) => {
 
   return (
     <div style={{ position: "relative" }}>
-      <pre
-        style={{
-          position: "sticky",
-          display: "inline-block",
-          top: 24,
-          right: 24,
-          background: "#000",
-          color: "#fff",
-          padding: 16,
-        }}
-      >
-        {JSON.stringify(visibleBlocks, null, 2)}
-      </pre>
       <Block
         id="primary"
         minHeight="100vh"
         bgcolor="primary.main"
         color="primary.contrastText"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
         onVisibleChange={handleVisibilityChange}
         {...args}
       >
-        Primary block
+        <PrintJson data={visibleBlocks} />
       </Block>
       <Block
         id="secondary"
         minHeight="100vh"
         bgcolor="secondary.main"
         color="secondary.contrastText"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
         onVisibleChange={handleVisibilityChange}
         {...args}
       >
-        Secondary block
+        <PrintJson data={visibleBlocks} />
       </Block>
     </div>
   );

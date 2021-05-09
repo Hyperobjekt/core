@@ -10,6 +10,9 @@ const styles = (theme) => ({
   },
 });
 
+/**
+ * Simple main content wrapper
+ */
 const Main = ({ classes, className, ...props }) => {
   return (
     <main

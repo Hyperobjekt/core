@@ -28,6 +28,16 @@ export const styles = (theme) => ({
  * - making the header sticky, either always or after scrolling a certain amount
  * - shrinking the header on scroll
  * - applying different styles to the header once it is "stuck" or "shrunk"
+ *
+ * ## Classes
+ *
+ * Provide class names in the classes object with the following keys to override styles:
+ *
+ * - `root`: applied to the root element
+ * - `shrunk`: applied to the root element when it is "shrunk"
+ * - `stuck`: applied to the root element when it is "stuck"
+ * - `toolbar`: applied to the `<Toolbar />` component
+ * - `offset`: applied to the offset div used to clear space under the header and offset page content
  */
 const Header = ({
   classes,

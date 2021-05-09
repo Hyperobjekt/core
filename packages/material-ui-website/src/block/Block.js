@@ -11,6 +11,15 @@ const styles = (theme) => ({
   },
   visible: {},
   container: {},
+  noPadding: {
+    padding: 0,
+  },
+  small: {
+    padding: theme.spacing(3, 0),
+  },
+  large: {
+    padding: theme.spacing(9, 0),
+  },
 });
 
 /**
@@ -21,11 +30,25 @@ const styles = (theme) => ({
  * - content within the block follows the constraints of the Container component
  *
  * The root Block component is a [Material UI box](https://material-ui.com/components/box/) component, so all [box props](https://material-ui.com/components/box/#api) and [style props](https://material-ui.com/system/basics/#all-inclusive) are available.
+ *
+ * ## Classes
+ *
+ * Provide class names in the classes object with the following keys to override styles:
+ *
+ * - `root`: applied to the root element
+ * - `visible`: applied to the root element when it is visible in the viewport
+ * - `noPadding`: applied to the root when `noPadding` prop is true
+ * - `small`: applied to the root when `small` prop is true
+ * - `large`: applied to the root when `large` prop is true
+ * - `container`: applied to the `<Container/>` element
  */
 const Block = ({
   classes,
   className,
   children,
+  noPadding,
+  small,
+  large,
   onVisibleChange,
   IntersectionOptions,
   ContainerProps,
@@ -42,7 +65,16 @@ const Block = ({
       className={clsx(
         "HypBlock-root",
         classes.root,
-        { "HypBlock-visible": inView, [classes.visible]: inView },
+        {
+          "HypBlock-visible": inView,
+          "HypBlock-noPadding": noPadding,
+          "HypBlock-small": small,
+          "HypBlock-large": large,
+          [classes.visible]: inView,
+          [classes.noPadding]: noPadding,
+          [classes.small]: small,
+          [classes.large]: large,
+        },
         className
       )}
       {...props}
@@ -76,6 +108,18 @@ Block.propTypes = {
    * Options passed to the `useInView` hook from [react-intersection-observer](https://github.com/thebuilder/react-intersection-observer#readme)
    */
   IntersectionOptions: PropTypes.object,
+  /**
+   * Disables padding on the block
+   */
+  noPadding: PropTypes.bool,
+  /**
+   * Use small padding preset
+   */
+  small: PropTypes.bool,
+  /**
+   * use large padding preset
+   */
+  large: PropTypes.bool,
 };
 
 export { Block };

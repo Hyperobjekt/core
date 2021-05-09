@@ -94,7 +94,7 @@ const Stack = ({
       display="flex"
       {...LayoutProps}
       {...props}
-    ></Box>
+    />
   );
 };
 

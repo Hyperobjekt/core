@@ -66,6 +66,18 @@ const styles = (theme) => ({
  * The Hero component is used to create a callout section that draws attention, usually at the top of the page.
  *
  * All props that are not specific to the Hero component are passed down to the Block component.
+ *
+ * ## Classes
+ *
+ * Provide class names in the classes object with the following keys to override styles:
+ *
+ * - `root`: applied to the root element
+ * - `overlay`: applied to the root element when "overlay" variant is used
+ * - `container`: applied to the `<Container />` element in the hero block
+ * - `content`: applied to the hero content wrapper
+ * - `imageWrapper`: applied to the hero image wrapper
+ * - `image`: applied to the hero image element
+ * - `gradient`: applied to the hero gradient element
  */
 const Hero = ({
   classes,
@@ -92,7 +104,7 @@ const Hero = ({
   return (
     <Block
       classes={{
-        root: clsx(classes.root, classes[variant]),
+        root: clsx("HypHero-root", classes.root, classes[variant]),
         container: classes.container,
       }}
       bgcolor="primary.main"
@@ -100,18 +112,22 @@ const Hero = ({
       ContainerProps={containerProps}
       {...props}
     >
-      <div className={classes.content}>{children}</div>
+      <div className={clsx("HypHero-content", classes.content)}>{children}</div>
       {image && (
-        <div className={classes.imageWrapper}>
+        <div className={clsx("HypHero-imageWrapper", classes.imageWrapper)}>
           {typeof image === "string" && (
-            <img className={classes.image} src={image} alt={alt} />
+            <img
+              className={clsx("HypHero-image", classes.image)}
+              src={image}
+              alt={alt}
+            />
           )}
           {typeof image !== "string" && image}
         </div>
       )}
       {gradientString && (
         <div
-          className={classes.gradient}
+          className={clsx("HypHero-gradient", classes.gradient)}
           style={{ background: gradientString }}
         />
       )}
