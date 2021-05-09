@@ -1,15 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { List, ListItem, SvgIcon, withStyles, Link } from "@material-ui/core";
 
-const DefaultArrowIcon = (props) => {
-  return (
-    <SvgIcon {...props}>
-      <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z" />
-    </SvgIcon>
-  );
-};
+const DefaultArrowIcon = ArrowDropDownIcon;
 
 export const styles = (theme) => {
   return {
@@ -18,16 +13,20 @@ export const styles = (theme) => {
       flex: "0 1",
       display: "flex",
       alignItems: "stretch",
+      justifyContent: "stretch",
     },
     /* Styles applied to the list wrapper */
-    list: {},
+    list: { width: "100%" },
     /* Styles applied to each list item */
     listItem: {
       position: "relative",
       flexDirection: "column",
-      alignItems: "flex-start",
+      alignItems: "stretch",
       justifyContent: "center",
       padding: 0,
+      "&:hover > $link, &:focus-within > $link": {
+        background: theme.palette.action.hover,
+      },
     },
     listItemActive: {
       "& > a": {
@@ -40,10 +39,26 @@ export const styles = (theme) => {
       alignItems: "center",
       padding: theme.spacing(1),
       whiteSpace: "nowrap",
+      transition: theme.transitions.create(["background"]),
     },
     linkActive: {
       fontWeight: "bold",
     },
+    separator: {
+      margin: theme.spacing(0, 1),
+      minWidth: 1,
+      minHeight: 24,
+    },
+    arrow: {
+      marginRight: theme.spacing(-1),
+    },
+    depth0: {},
+    depth1: {
+      "& $link": {
+        paddingLeft: theme.spacing(3),
+      },
+    },
+    depth2: {},
   };
 };
 
@@ -58,11 +73,29 @@ const isActive = (menuItem, active) => {
   if (typeof active === "string")
     return menuItem.name === active || menuItem.link === active;
   if (typeof active === "function") return active(menuItem);
+  if (menuItem.hasOwnProperty("active")) return menuItem.active;
   return false;
 };
 
 /**
  * The navigation component is used to create a nested list of links, most often used for site navigation.
+ *
+ * By default, a vertical navigation list is output that mirrors the structure of the `links` prop.
+ *
+ * The following keys can be passed to the classes prop to provide a custom class name for the following elements:
+ *
+ * - `root`: root element of the navigation tree
+ * - `depth0`: root on the top level of navigation
+ * - `depth1`: root on the second level of navigation
+ * - `depth2`: root on the third level of navigation
+ * - `list`: unordered list element in the navigation tree
+ * - `listItem`: each list item within the navigation tree
+ * - `listItemActive`: active list item within the navigation tree
+ * - `link`: each link in the navigation tree
+ * - `linkActive`: active link
+ * - `separator`: separator element between links (when separator = true)
+ * - `arrow`: arrow element for navigation entries that have submenus
+ *
  */
 const Navigation = ({
   classes,
@@ -76,6 +109,9 @@ const Navigation = ({
   LinkProps,
   isGatsbyLink,
   ArrowIcon,
+  separator,
+  ListProps,
+  ListItemProps,
   ...props
 }) => {
   const showSubmenu = depth < maxDepth;
@@ -85,39 +121,60 @@ const Navigation = ({
         "HypNavigation-root",
         classes.root,
         `HypNavigation-depth${depth}`,
+        {
+          [classes.depth0]: depth === 0,
+          [classes.depth1]: depth === 1,
+          [classes.depth2]: depth === 2,
+        },
         className
       )}
       {...props}
     >
-      <List className={clsx("HypNavigation-list", classes.list)}>
+      <List
+        disablePadding
+        className={clsx("HypNavigation-list", classes.list)}
+        {...ListProps}
+      >
         {links.map((menuItem, index) => (
-          <ListItem
-            className={clsx("HypNavigation-listItem", classes.listItem, {
-              [classes.listItemActive]: isActive(menuItem, active),
-            })}
-            key={"link" + index}
-          >
-            <LinkComponent
-              className={clsx("HypNavigation-link", classes.link)}
-              href={isGatsbyLink ? undefined : menuItem.link}
-              to={isGatsbyLink ? menuItem.link : undefined}
-              activeClassName={isGatsbyLink ? classes.linkActive : undefined}
-              {...LinkProps}
+          <React.Fragment key={"link" + index}>
+            <ListItem
+              className={clsx("HypNavigation-listItem", classes.listItem, {
+                [classes.listItemActive]: isActive(menuItem, active),
+              })}
+              {...ListItemProps}
             >
-              {menuItem.name}
-              {menuItem.subMenu?.length > 0 && showSubmenu && <ArrowIcon />}
-            </LinkComponent>
-            {menuItem.subMenu?.length > 0 && showSubmenu && (
-              <Navigation
-                classes={classes}
-                component="div"
-                depth={depth + 1}
-                maxDepth={maxDepth}
-                links={menuItem.subMenu}
-                active={active}
-              ></Navigation>
+              <LinkComponent
+                className={clsx("HypNavigation-link", classes.link, {
+                  [classes.linkActive]: isActive(menuItem, active),
+                })}
+                href={isGatsbyLink ? undefined : menuItem.link}
+                to={isGatsbyLink ? menuItem.link : undefined}
+                activeClassName={isGatsbyLink ? classes.linkActive : undefined}
+                partiallyActive={true}
+                {...LinkProps}
+              >
+                {menuItem.name}
+                {menuItem.subMenu?.length > 0 && showSubmenu && (
+                  <ArrowIcon className={classes.arrow} />
+                )}
+              </LinkComponent>
+              {menuItem.subMenu?.length > 0 && showSubmenu && (
+                <Navigation
+                  classes={classes}
+                  component="div"
+                  depth={depth + 1}
+                  maxDepth={maxDepth}
+                  links={menuItem.subMenu}
+                  active={active}
+                ></Navigation>
+              )}
+            </ListItem>
+            {index !== links.length - 1 && separator && (
+              <div className={classes.separator}>
+                {typeof separator !== "boolean" && separator}
+              </div>
             )}
-          </ListItem>
+          </React.Fragment>
         ))}
       </List>
     </Component>
@@ -132,6 +189,9 @@ Navigation.defaultProps = {
   component: "nav",
   depth: 0,
   maxDepth: 999,
+  LinkProps: {},
+  ListProps: {},
+  ListItemProps: {},
 };
 
 Navigation.propTypes = {
@@ -154,12 +214,18 @@ Navigation.propTypes = {
   depth: PropTypes.number,
   /** Arrow component to indicate there are sublinks */
   ArrowIcon: PropTypes.any,
+  /** Show separator between links */
+  separator: PropTypes.any,
   /** Component to use for links */
   LinkComponent: PropTypes.any,
   /** Props object to pass to link component */
   LinkProps: PropTypes.object,
   /** boolean that determines if the [Gatsby Link API](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-link/) should be used instead of standard `<a>` tag props  */
   isGatsbyLink: PropTypes.bool,
+  /** Props object to pass to List component */
+  ListProps: PropTypes.object,
+  /** Props object to pass to List Items component */
+  ListItemProps: PropTypes.object,
 };
 
 export { Navigation };
