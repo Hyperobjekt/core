@@ -15,6 +15,13 @@ export const styles = (theme) => {
       alignItems: "stretch",
       justifyContent: "stretch",
     },
+    depth0: {},
+    depth1: {
+      "& $link": {
+        paddingLeft: theme.spacing(3),
+      },
+    },
+    depth2: {},
     /* Styles applied to the list wrapper */
     list: { width: "100%" },
     /* Styles applied to each list item */
@@ -52,13 +59,6 @@ export const styles = (theme) => {
     arrow: {
       marginRight: theme.spacing(-1),
     },
-    depth0: {},
-    depth1: {
-      "& $link": {
-        paddingLeft: theme.spacing(3),
-      },
-    },
-    depth2: {},
   };
 };
 

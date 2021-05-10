@@ -3,6 +3,24 @@ import { Navigation } from "./Navigation";
 
 const exportComponent = withStyles((theme) => ({
   root: {},
+  depth0: {},
+  depth1: {
+    background: theme.palette.background.paper,
+    minWidth: 120,
+    position: "absolute",
+    top: "100%",
+    opacity: 0,
+    visibility: "hidden", // hide from screen reader
+    pointerEvents: "none", // ignore mouse events
+    transition: theme.transitions.create(["opacity", "visibility"]),
+    "& $list": {
+      flexDirection: "column",
+    },
+    "& $link": {
+      justifyContent: "flex-start",
+    },
+  },
+  depth2: {},
   list: {
     display: "flex",
     justifyContent: "flex-start",
@@ -13,7 +31,6 @@ const exportComponent = withStyles((theme) => ({
     position: "relative",
     padding: 0,
     flex: 0,
-    background: theme.palette.background.default,
     "&:hover $depth1, &:focus-within $depth1": {
       opacity: 1,
       visibility: "visible",
@@ -23,6 +40,7 @@ const exportComponent = withStyles((theme) => ({
       background: theme.palette.action.hover,
     },
   },
+  listItemActive: {},
   link: {
     display: "flex",
     flex: 1,
@@ -37,20 +55,6 @@ const exportComponent = withStyles((theme) => ({
   },
   linkActive: {
     fontWeight: "bold",
-  },
-  depth1: {
-    position: "absolute",
-    top: "100%",
-    opacity: 0,
-    visibility: "hidden", // hide from screen reader
-    pointerEvents: "none", // ignore mouse events
-    transition: theme.transitions.create(["opacity", "visibility"]),
-    "& $list": {
-      flexDirection: "column",
-    },
-    "& $link": {
-      justifyContent: "flex-start",
-    },
   },
   separator: {
     margin: `0 1px 0 0`,
