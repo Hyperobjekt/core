@@ -143,7 +143,7 @@ Hero.propTypes = {
   /**
    * URL or path to the image to use in the hero
    */
-  image: PropTypes.string,
+  image: PropTypes.any,
   /**
    * Alt text to use for the image
    */

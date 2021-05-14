@@ -166,6 +166,11 @@ const Navigation = ({
                   maxDepth={maxDepth}
                   links={menuItem.subMenu}
                   active={active}
+                  isGatsbyLink={isGatsbyLink}
+                  LinkComponent={LinkComponent}
+                  LinkProps={LinkProps}
+                  ListProps={ListProps}
+                  ListItemProps={ListItemProps}
                 ></Navigation>
               )}
             </ListItem>
