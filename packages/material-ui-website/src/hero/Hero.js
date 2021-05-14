@@ -92,7 +92,9 @@ const Hero = ({
 }) => {
   const gradientString = Array.isArray(gradient)
     ? `linear-gradient(${gradient.join(",")})`
-    : gradient;
+    : typeof gradient === "string"
+    ? gradient
+    : undefined;
 
   const containerProps = {
     align,
@@ -125,7 +127,7 @@ const Hero = ({
           {typeof image !== "string" && image}
         </div>
       )}
-      {gradientString && (
+      {gradient && (
         <div
           className={clsx("HypHero-gradient", classes.gradient)}
           style={{ background: gradientString }}
@@ -155,7 +157,11 @@ Hero.propTypes = {
   /**
    * A CSS gradient string, or alternatively an array of linear-gradient properties.  Use a gradient creator to make things easier: ([components.ai](https://components.ai/gradient/), [cssgradient.io](https://cssgradient.io/))
    */
-  gradient: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  gradient: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+    PropTypes.bool,
+  ]),
   /**
    * Props passed to the Container component
    */
