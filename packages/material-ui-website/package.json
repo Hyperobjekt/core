@@ -1,6 +1,6 @@
 {
   "name": "@hyperobjekt/material-ui-website",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "dependencies": {
