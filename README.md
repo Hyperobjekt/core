@@ -31,8 +31,8 @@ yarn build
 
 To publish new versions of packages with changed, run:
 
-```
-npx lerna publish
+```sh
+yarn package
 ```
 
 > Note: if you are publishing a new package, you will have to run the first publish manually by navigating to the package directory and running `npm publish --access public` to specify it is a public package.

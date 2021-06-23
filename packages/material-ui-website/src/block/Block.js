@@ -6,9 +6,7 @@ import Container from "../container";
 import { useInView } from "react-intersection-observer";
 
 const styles = (theme) => ({
-  root: {
-    padding: theme.spacing(6, 0),
-  },
+  root: {},
   visible: {},
   container: {},
   noPadding: {
@@ -16,6 +14,9 @@ const styles = (theme) => ({
   },
   small: {
     padding: theme.spacing(3, 0),
+  },
+  medium: {
+    padding: theme.spacing(6, 0),
   },
   large: {
     padding: theme.spacing(9, 0),
@@ -48,6 +49,7 @@ const Block = ({
   children,
   noPadding,
   small,
+  medium,
   large,
   onVisibleChange,
   IntersectionOptions,
@@ -56,6 +58,14 @@ const Block = ({
 }) => {
   // trigger events based on block visibility
   const { ref, inView, entry } = useInView(IntersectionOptions);
+  // check if padding props exist so we know if we should set default padding or not (default = medium)
+  const boxPaddingProps = ["p", "pt", "pr", "pb", "pl", "px", "py"];
+  const hasPaddingProps =
+    small ||
+    large ||
+    noPadding ||
+    Object.keys(props).find((key) => boxPaddingProps.indexOf(key) > -1);
+  console.log({ hasPaddingProps, props });
   useEffect(() => {
     onVisibleChange && onVisibleChange(inView, entry);
   }, [inView]);
@@ -74,6 +84,7 @@ const Block = ({
           [classes.noPadding]: noPadding,
           [classes.small]: small,
           [classes.large]: large,
+          [classes.medium]: !hasPaddingProps || medium,
         },
         className
       )}
