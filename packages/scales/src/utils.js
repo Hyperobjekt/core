@@ -56,6 +56,24 @@ export const getColorScale = (type, domain, colors) => {
   }
 };
 
+export const getDomain = (
+  type,
+  data,
+  options = { valueKey: "value", sorter }
+) => {
+  switch (type) {
+    case "category":
+      return getGroups(data, (d) => d[valueKey]).sort(sorter);
+    case "quantile":
+      return data.map((d) => d[valueKey]);
+    case "quantize":
+    case "continuous":
+    case "threshold":
+      return getExtent(data, (d) => d[valueKey]);
+    default:
+  }
+};
+
 /**
  * Returns a scale for mapping domain to a position
  * @param {string} type

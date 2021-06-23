@@ -10,7 +10,6 @@ const ScaleContainer = styled("div")({
  * Scales take some data and render a tick legend alongside a color scale
  */
 const BaseScale = ({
-  data,
   valueKey = "value",
   marker,
   markerComponent = ScaleMarker,
@@ -34,7 +33,6 @@ const BaseScale = ({
         {marker && (
           <Marker
             value={marker[valueKey] ? marker[valueKey] : marker}
-            data={data}
             positionScale={positionScale}
             colorScale={colorScale}
           />
