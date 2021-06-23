@@ -85,8 +85,6 @@ The following utility functions are provided by this package:
 
 This function will return an array of hex color strings based on the provided `value` parameter.
 
-**Parameters**
-
 - `value`: either a string containing a scale name from [d3-scale-chromatic](https://observablehq.com/@d3/color-schemes) (e.g. "YlGnBu") or an array of color strings (e.g. ["#f00", "#0f0", "#00f"])
 - `numColors`: the number of colors to return
 
