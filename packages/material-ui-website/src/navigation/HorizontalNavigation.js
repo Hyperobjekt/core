@@ -51,6 +51,7 @@ const exportComponent = withStyles((theme) => ({
     padding: theme.spacing(1, 2),
     minHeight: 40,
     minWidth: "100%",
+    fontSize: "inherit", // keeps fonts the same size when different components are used
     transition: theme.transitions.create(["background"]),
   },
   linkActive: {

@@ -10,12 +10,13 @@ export default {
     links: [
       {
         name: "Home",
+        active: true,
         link: "/",
       },
       {
         name: "About",
-        link: "/about",
-        active: true,
+        link: "",
+
         subMenu: [
           {
             name: "Team",

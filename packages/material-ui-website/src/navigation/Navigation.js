@@ -2,7 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { List, ListItem, SvgIcon, withStyles, Link } from "@material-ui/core";
+import {
+  List,
+  ListItem,
+  SvgIcon,
+  withStyles,
+  Link,
+  ButtonBase,
+} from "@material-ui/core";
 
 const DefaultArrowIcon = ArrowDropDownIcon;
 
@@ -45,6 +52,7 @@ export const styles = (theme) => {
       display: "flex",
       alignItems: "center",
       padding: theme.spacing(1),
+      fontSize: "inherit", // keeps fonts the same size when different components are used
       whiteSpace: "nowrap",
       transition: theme.transitions.create(["background"]),
     },
@@ -75,6 +83,47 @@ const isActive = (menuItem, active) => {
   if (typeof active === "function") return active(menuItem);
   if (menuItem.hasOwnProperty("active")) return menuItem.active;
   return false;
+};
+
+const NavigationLink = ({
+  component = Link,
+  activeClassName,
+  partiallyActive = true,
+  href,
+  isGatsbyLink,
+  LinkProps,
+  children,
+  ...props
+}) => {
+  const LinkComponent = component;
+
+  // use a button instead of a link if this is an empty link
+  if (!href || href === "#")
+    return (
+      <Link component="button" {...props}>
+        {children}
+      </Link>
+    );
+
+  // use gatsby link props if using a gatsby link
+  if (isGatsbyLink)
+    return (
+      <LinkComponent
+        to={href}
+        activeClassName={activeClassName}
+        partiallyActive={partiallyActive}
+        {...props}
+      >
+        {children}
+      </LinkComponent>
+    );
+
+  // assume component with same API as <a>
+  return (
+    <LinkComponent href={href} {...props}>
+      {children}
+    </LinkComponent>
+  );
 };
 
 /**
@@ -143,21 +192,20 @@ const Navigation = ({
               })}
               {...ListItemProps}
             >
-              <LinkComponent
+              <NavigationLink
                 className={clsx("HypNavigation-link", classes.link, {
                   [classes.linkActive]: isActive(menuItem, active),
                 })}
-                href={isGatsbyLink ? undefined : menuItem.link}
-                to={isGatsbyLink ? menuItem.link : undefined}
-                activeClassName={isGatsbyLink ? classes.linkActive : undefined}
-                partiallyActive={true}
+                href={menuItem.link}
+                activeClassName={classes.linkActive}
+                isGatsbyLink={isGatsbyLink}
                 {...LinkProps}
               >
                 {menuItem.name}
                 {menuItem.subMenu?.length > 0 && showSubmenu && (
                   <ArrowIcon className={classes.arrow} />
                 )}
-              </LinkComponent>
+              </NavigationLink>
               {menuItem.subMenu?.length > 0 && showSubmenu && (
                 <Navigation
                   classes={classes}
