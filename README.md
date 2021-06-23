@@ -29,11 +29,15 @@ yarn build
 
 ### Publishing to npm
 
-To publish new versions of packages with changed, run:
+Before publishing, update the `CHANGELOG.md` for each package that has changes, with the new version number and a list of changes in that version.
 
-```sh
-yarn package
-```
+Publishing packages is managed by `lerna`, running `yarn package` will perform the following actions:
+
+- performs a build of all packages
+- detects packages with changed code
+- prompts you for a version number to increment to
+- increments version in `package.json` and publishes to NPM
+- updates the github repo with the updated `package.json` and adds a release + tag for the new version
 
 > Note: if you are publishing a new package, you will have to run the first publish manually by navigating to the package directory and running `npm publish --access public` to specify it is a public package.
 

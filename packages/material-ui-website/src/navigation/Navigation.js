@@ -196,6 +196,7 @@ const Navigation = ({
                 className={clsx("HypNavigation-link", classes.link, {
                   [classes.linkActive]: isActive(menuItem, active),
                 })}
+                component={LinkComponent}
                 href={menuItem.link}
                 activeClassName={classes.linkActive}
                 isGatsbyLink={isGatsbyLink}
