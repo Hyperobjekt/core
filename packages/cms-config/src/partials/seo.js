@@ -12,7 +12,7 @@ const seo = {
       widget: "string",
       hint:
         "this is used for the browser tab, the page name in search results, or when the page is shared on social platforms (<title> tag)",
-      required: false,
+      required: true,
     },
     {
       label: "Description",
@@ -48,7 +48,6 @@ const seo = {
       label: "Blog Post?",
       name: "isBlogPost",
       widget: "boolean",
-      required: false,
       hint: "turn this on for blog posts to ensure proper metadata and linking",
     },
   ],
