@@ -1,8 +1,6 @@
 {
   "name": "@hyperobjekt/cms-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "lib/index.js",
-  "module": "lib/index.js",
-  "dependencies": {},
-  "peerDependencies": {}
+  "module": "lib/index.js"
 }
