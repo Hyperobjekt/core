@@ -18,8 +18,8 @@ export const name = {
   label: "Page Name",
   name: "name",
   widget: "string",
-  hint: `the page name is used to refer to this page within the site`,
-  required: false,
+  hint: `Used to refer to this page within the site and CMS.  If no "slug" value is entered for the page path, one will be created based on this value.`,
+  required: true,
 };
 
 export const body = {

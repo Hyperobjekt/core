@@ -48,6 +48,7 @@ const seo = {
       label: "Blog Post?",
       name: "isBlogPost",
       widget: "boolean",
+      default: false,
       hint: "turn this on for blog posts to ensure proper metadata and linking",
     },
   ],

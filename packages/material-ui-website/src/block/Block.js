@@ -65,7 +65,6 @@ const Block = ({
     large ||
     noPadding ||
     Object.keys(props).find((key) => boxPaddingProps.indexOf(key) > -1);
-  console.log({ hasPaddingProps, props });
   useEffect(() => {
     onVisibleChange && onVisibleChange(inView, entry);
   }, [inView]);
